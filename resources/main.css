@@ -1,0 +1,77 @@
+@font-face {
+  font-family: "Roboto";
+  src: url("../resources/fonts/Roboto/Roboto-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Playfair";
+  src: url("../resources/fonts/PlayfairDisplay/PlayfairDisplay-VariableFont_wght.ttf")
+    format("truetype");
+}
+
+body {
+  font-family: "Playfair";
+}
+
+h2 {
+  font-family: "Playfair";
+  font-weight: 600;
+  font-size: 1.75rem;
+}
+
+p {
+  font-size: 1.1rem;
+  color: #32373b;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.container {
+  max-width: 1024px;
+  min-height: 82px;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+}
+
+.prevent-select {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+header,
+main {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+}
+
+header div.container {
+  width: 100%;
+  justify-content: space-between;
+}
+
+header .logo {
+  font-family: "Roboto";
+  font-size: 2.5rem;
+  font-weight: 500;
+}
+
+header nav ul {
+  display: flex;
+  flex-flow: column;
+}
+
+main.posts {
+  margin-top: 50px;
+}
