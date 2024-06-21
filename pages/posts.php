@@ -4,7 +4,7 @@ include 'header.php';
 $pages = array_map(function ($page) {
     return [
         'name' => str_replace('.md', '', $page),
-        'summary' => substr(file_get_contents(__DIR__ . '/../posts/' . $page), 0, 250) . '...'
+        'summary' => substr(file_get_contents(__DIR__ . '/../posts/' . $page), 0, 300) . '...'
     ];
 }, array_diff(scandir(__DIR__ . '/../posts/'), array('..', '.')));
 ?>
@@ -21,3 +21,5 @@ $pages = array_map(function ($page) {
         </ul>
     </div>
 </main>
+
+<?php include 'footer.php' ?>
