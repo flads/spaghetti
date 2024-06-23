@@ -27,11 +27,25 @@ ul {
 
 a {
   text-decoration: none;
-  color: black;
+  color: #26292c;
 }
+
+p a {
+  text-decoration: underline;
+}
+
+.m-0 {
+  margin: 0;
+}
+
+/*p a {
+  color: #eca15b;
+  font-weight: 600;
+}*/
 
 .container {
   max-width: 1024px;
+  width: 100%;
   display: flex;
   flex-flow: row;
   align-items: center;
@@ -44,7 +58,8 @@ a {
 }
 
 header,
-main {
+main,
+footer {
   display: flex;
   flex-flow: row;
   align-items: center;
@@ -66,26 +81,45 @@ header .logo {
 
 header nav ul {
   display: flex;
-  flex-flow: column;
+  flex-flow: row;
+  gap: 12px;
+  font-weight: 400;
+  color: #32373b;
 }
 
 main.posts {
   margin-top: 50px;
 }
 
+main.posts div.container {
+  margin-top: 50px;
+  max-width: 768px;
+}
+
 main.posts li {
   margin-bottom: 50px;
 }
 
-footer {
+main.posts li div {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: start;
+}
+
+main.posts li div p {
+  color: #32373b;
+  font-size: 1rem;
+}
+
+footer {
   margin-top: auto;
   margin-bottom: 0;
-  min-height: 80px;
 }
 
 footer div.container {
+  display: flex;
+  justify-content: center;
+  min-height: 80px;
   gap: 10px;
 }
 

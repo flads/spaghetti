@@ -1,21 +1,43 @@
 <?php
 include 'header.php';
+require(__DIR__ . '/../resources/php/parsedown-1.7.4/Parsedown.php');
 
-$pages = array_map(function ($page) {
+$parsedown = new Parsedown();
+
+$files = array_diff(scandir(__DIR__ . '/../posts/'), array('..', '.'));
+$posts = array_map(function ($filename) use ($parsedown) {
+    $filePath = __DIR__ . '/../posts/' . $filename;
+
+    $file = file($filePath);
     return [
-        'name' => str_replace('.md', '', $page),
-        'summary' => substr(file_get_contents(__DIR__ . '/../posts/' . $page), 0, 300) . '...'
+        'title' => substr($file[1], 8, -2),
+        'date' => substr($file[2], 6, -1),
+        'summary' => $parsedown->text(substr($file[3], 10, -2)),
+        'draft' => substr($file[4], 6, -1),
+        'pinned' => substr($file[5], 8, -1),
     ];
-}, array_diff(scandir(__DIR__ . '/../posts/'), array('..', '.')));
+
+    /* TODO: para a tela de exibição da postagem
+    for ($i = 0; $i < 7; $i++) {
+        unset($file[$i]);
+    }
+
+    $response['summary'] = $parsedown->text(implode($file));
+
+    return $response; */
+}, $files);
 ?>
 
 <main class="posts">
     <div class="container">
         <ul>
-            <?php foreach ($pages as $page) { ?>
+            <?php foreach ($posts as $post) { ?>
                 <li>
-                    <h2><?php echo $page['name'] ?></h2>
-                    <p><?php echo $page['summary'] ?></p>
+                    <div>
+                        <h2 class="m-0"><?php echo $post['title'] ?></h2>
+                        <p class="m-0"><?php echo $post['date'] ?></p>
+                    </div>
+                    <p><?php echo $post['summary'] ?></p>
                 </li>
             <?php } ?>
         </ul>

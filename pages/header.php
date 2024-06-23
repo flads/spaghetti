@@ -3,7 +3,8 @@
         <a class="logo prevent-select" href="/">Spaghetti</a>
         <nav>
             <ul>
-                <li class="prevent-select"><a href="/about">About Me</a></li>
+                <li class="prevent-select"><a href="/about">About me</a></li>
+                <li class="prevent-select"><a href="/contact">Contact</a></li>
             </ul>
         </nav>
     </div>
