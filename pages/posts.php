@@ -1,15 +1,17 @@
 <?php
-include 'header.php';
 require(__DIR__ . '/../resources/php/parsedown-1.7.4/Parsedown.php');
 
 $parsedown = new Parsedown();
 
 $files = array_diff(scandir(__DIR__ . '/../posts/'), array('..', '.'));
-$posts = array_map(function ($filename) use ($parsedown) {
+$posts = [];
+foreach ($files as $filename) {
+    if ($filename[0] === '_') continue;
+
     $filePath = __DIR__ . '/../posts/' . $filename;
 
     $file = file($filePath);
-    return [
+    $posts[] = [
         'title' => substr($file[1], 8, -2),
         'date' => substr($file[2], 6, -1),
         'summary' => $parsedown->text(substr($file[3], 10, -2)),
@@ -25,7 +27,7 @@ $posts = array_map(function ($filename) use ($parsedown) {
     $response['summary'] = $parsedown->text(implode($file));
 
     return $response; */
-}, $files);
+}
 ?>
 
 <main class="posts">
@@ -37,11 +39,9 @@ $posts = array_map(function ($filename) use ($parsedown) {
                         <h2 class="m-0"><?php echo $post['title'] ?></h2>
                         <p class="m-0"><?php echo $post['date'] ?></p>
                     </div>
-                    <p><?php echo $post['summary'] ?></p>
+                    <?php echo $post['summary'] ?>
                 </li>
             <?php } ?>
         </ul>
     </div>
 </main>
-
-<?php include 'footer.php' ?>

@@ -83,15 +83,15 @@ header .logo {
 header nav ul {
   display: flex;
   flex-flow: row;
-  gap: 12px;
+  gap: 20px;
   font-weight: 400;
 }
 
-main.posts {
+main {
   margin-top: 50px;
 }
 
-main.posts div.container {
+main div.container {
   margin-top: 50px;
   max-width: 768px;
 }
@@ -106,8 +106,18 @@ main.posts li div {
   align-items: start;
 }
 
+main.posts li > p {
+  margin-top: 16px;
+}
+
 main.posts li div p {
-  font-size: 1rem;
+  margin-top: 2px;
+  font-size: 0.9rem;
+}
+
+main.about div.container {
+  flex-flow: column;
+  align-items: start;
 }
 
 footer {
