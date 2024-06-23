@@ -18,7 +18,23 @@
 </head>
 
 <body>
-    <?php include 'pages/posts.php' ?>
+    <?php
+    include __DIR__ . '/pages/header.php';
+
+    $request = $_SERVER['REQUEST_URI'];
+
+
+    switch ($request) {
+        case '/':
+            include 'pages/posts.php';
+            break;
+        case '/about':
+            include 'pages/about.php';
+            break;
+    }
+
+    include __DIR__ . '/pages/footer.php';
+    ?>
 </body>
 
 </html>
