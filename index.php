@@ -18,6 +18,17 @@
 </head>
 
 <body>
+    <header>
+        <div class="container">
+            <a class="logo prevent-select" href="/">Spaghetti</a>
+            <nav>
+                <ul>
+                    <li class="prevent-select"><a href="/about">About me</a></li>
+                    <li class="prevent-select"><a href="/contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
     <?php
     include __DIR__ . '/pages/header.php';
 
@@ -31,10 +42,12 @@
         case '/about':
             include 'pages/about.php';
             break;
-    }
-
-    include __DIR__ . '/pages/footer.php';
-    ?>
+    <footer>
+        <div class="container">
+            <i class="fa-brands fa-github"></i>
+            <i class="fa-brands fa-linkedin"></i>
+        </div>
+    </footer>
 </body>
 
 </html>
