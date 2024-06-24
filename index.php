@@ -14,7 +14,7 @@
     <!-- css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="resources/main.css">
+    <link rel="stylesheet" href="/resources/main.css">
 </head>
 
 <body>
@@ -30,22 +30,29 @@
         </div>
     </header>
     <?php
-    include __DIR__ . '/pages/header.php';
+    $uri = $_SERVER['REQUEST_URI'];
 
-    $request = $_SERVER['REQUEST_URI'];
-
-
-    switch ($request) {
+    switch ($uri) {
         case '/':
             include 'pages/posts.php';
             break;
         case '/about':
             include 'pages/about.php';
             break;
+        default:
+            include !file(__DIR__ . '/posts' . str_replace('/post', '', $uri) . '.md')
+                ? 'pages/404.php'
+                : 'pages/post.php';
+            break;
+    }
+    ?>
     <footer>
-        <div class="container">
+        <div>
             <i class="fa-brands fa-github"></i>
             <i class="fa-brands fa-linkedin"></i>
+        </div>
+        <div>
+            <p>Made with <a target="_blank" href="https://spaghetti.rest">Spaghetti</a></p>
         </div>
     </footer>
 </body>

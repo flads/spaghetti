@@ -23,6 +23,7 @@ p {
 }
 
 ul {
+  margin: 0;
   list-style: none;
   padding: 0;
 }
@@ -40,14 +41,13 @@ p a {
   margin: 0;
 }
 
-/*p a {
-  color: #eca15b;
+p a {
+  color: #32373b;
   font-weight: 600;
-}*/
+}
 
 .container {
   max-width: 768px;
-  width: 100%;
   display: flex;
   flex-flow: row;
   align-items: center;
@@ -109,19 +109,29 @@ main.posts li > p {
   margin-top: 16px;
 }
 
-main.posts li div p {
+main.posts li div p,
+main.post div.title p {
   margin-top: 2px;
   font-size: 0.9rem;
 }
 
-main.about div.container {
+main.post p img {
+  width: 450px;
+}
+
+main.about div.container,
+main.not-found div.container,
+main.post div.container {
   flex-flow: column;
   align-items: start;
 }
 
 footer {
+  display: flex;
+  flex-direction: column;
   margin-top: auto;
   margin-bottom: 0;
+  padding-top: 150px;
 }
 
 footer div.container {
@@ -133,4 +143,8 @@ footer div.container {
 
 footer i {
   font-size: 1.1rem;
+}
+
+footer p {
+  font-size: 0.75rem;
 }
