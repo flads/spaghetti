@@ -164,6 +164,17 @@ main.post div.container {
   align-items: start;
 }
 
+main.about div.container {
+  gap: 15px;
+}
+
+main.about div.socials {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  font-size: 18px;
+}
+
 footer {
   display: flex;
   flex-direction: column;
@@ -175,7 +186,7 @@ footer {
 footer div.socials {
   display: flex;
   justify-content: center;
-  gap: 18px;
+  gap: 12px;
 }
 
 footer i {
