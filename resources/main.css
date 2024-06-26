@@ -2,16 +2,22 @@
   --h2-color: #2f3337;
   --text-color: #32373b;
   --bg-color: #fff;
+  --fg-color: #f2f4f6;
   --sun-icon-display: none;
   --moon-icon-display: block;
+  --form-border: solid #d5d5d5 1px;
+  --button-background: #e7eaee;
 }
 
 [data-theme="dark"] {
   --h2-color: #eee;
   --text-color: #eee;
   --bg-color: #272727;
+  --fg-color: #333333;
   --sun-icon-display: block;
   --moon-icon-display: none;
+  --form-border: solid #474747 1px;
+  --button-background: #1f1f1f;
 }
 
 html,
@@ -89,6 +95,14 @@ p a {
   cursor: pointer;
 }
 
+.w-50 {
+  width: 50%;
+}
+
+.w-100 {
+  width: 100%;
+}
+
 header,
 main,
 footer {
@@ -129,10 +143,6 @@ main {
   margin-top: 50px;
 }
 
-main div.container {
-  margin-top: 50px;
-}
-
 main.posts li {
   margin-bottom: 50px;
 }
@@ -157,9 +167,9 @@ main.post p img {
   width: 450px;
 }
 
-main.about div.container,
-main.not-found div.container,
-main.post div.container {
+main div.container {
+  width: 100%;
+  margin-top: 50px;
   flex-flow: column;
   align-items: start;
 }
@@ -173,6 +183,60 @@ main.about div.socials {
   justify-content: center;
   gap: 12px;
   font-size: 18px;
+}
+
+main.add-new-post form {
+  margin-top: 40px;
+}
+
+form div.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+form div.form-group:not(:first-child) {
+  margin-top: 20px;
+}
+
+form input {
+  min-height: 32px;
+}
+
+form input,
+form input:focus,
+form textarea,
+form textarea:focus {
+  border: var(--form-border);
+  border-radius: 3px;
+  background-color: var(--fg-color);
+  outline: none;
+  color: var(--text-color);
+  padding: 5px 7.5px;
+  font-size: 1rem;
+  font-family: "Roboto", serif;
+}
+
+form textarea,
+form textarea:focus {
+  min-height: 320px;
+  padding: 10px 7.5px;
+}
+
+form div.form-group:last-child {
+  width: 100%;
+  display: flex;
+  align-items: end;
+}
+
+form button {
+  cursor: pointer;
+  border: var(--form-border);
+  color: var(--text-color);
+  border-radius: 3px;
+  width: 110px;
+  min-height: 28px;
+  background-color: var(--button-background);
 }
 
 footer {

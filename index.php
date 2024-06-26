@@ -52,6 +52,9 @@
         case '/about':
             include 'pages/about.php';
             break;
+        case '/admin/add-new-post':
+            include 'pages/add-new-post.php';
+            break;
         default:
             include !file(__DIR__ . '/posts' . str_replace('/post', '', $uri) . '.md')
                 ? 'pages/404.php'
