@@ -39,6 +39,9 @@ usort($posts, fn ($a, $b) => $b['date'] <=> $a['date']);
                     <?php echo $post['summary'] ?>
                 </li>
             <?php } ?>
+            <?php if (empty($posts)) { ?>
+                <p>No posts yet ...</p>
+            <?php } ?>
         </ul>
     </div>
 </main>
