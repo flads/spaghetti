@@ -199,6 +199,10 @@ form div.form-group:not(:first-child) {
   margin-top: 20px;
 }
 
+form label {
+  margin-bottom: 8px;
+}
+
 form input {
   min-height: 32px;
 }
@@ -221,6 +225,17 @@ form textarea,
 form textarea:focus {
   min-height: 320px;
   padding: 10px 7.5px;
+}
+
+form textarea.content,
+form textarea.content:focus {
+  min-height: 320px;
+}
+
+form textarea.summary,
+form textarea.summary:focus {
+  resize: none;
+  min-height: 80px;
 }
 
 form div.form-group:last-child {
