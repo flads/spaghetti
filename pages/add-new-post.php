@@ -9,7 +9,7 @@ if ($form["title"] && $form["summary"] && $form["content"]) {
 
     $postSettings = [
         "title" => '"' . $form["title"] . '"',
-        "date" => $form["date"] ?? date_format(date_create(), 'Y-m-d'),
+        "date" => date_format(date_create(), 'Y-m-d H:i:s'),
         "summary" => '"' . $form["summary"] . '"',
         "draft" => $form["draft"] ?? "false",
         "pinned" => $form["pinned"] ?? "false",

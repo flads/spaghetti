@@ -13,7 +13,8 @@ $posts = array_map(function ($filename) use ($parsedown) {
     return [
         'filename' => str_replace('.md', '', $filename),
         'title' => substr($file[1], 8, -2),
-        'date' => date_format(date_create(substr($file[2], 6, -1)), 'd-m-Y'),
+        'date' => substr($file[2], 6, -1),
+        'formattedDate' => date_format(date_create(substr($file[2], 6, -1)), 'd-m-Y'),
         'summary' => $parsedown->text(substr($file[3], 10, -2)),
         'draft' => substr($file[4], 6, -1),
         'pinned' => substr($file[5], 8, -1),
@@ -34,7 +35,7 @@ usort($posts, fn ($a, $b) => $b['date'] <=> $a['date']);
                                 <?php echo $post['title'] ?>
                             </a>
                         </h2>
-                        <p class="m-0"><?php echo $post['date'] ?></p>
+                        <p class="m-0"><?php echo $post['formattedDate'] ?></p>
                     </div>
                     <?php echo $post['summary'] ?>
                 </li>
