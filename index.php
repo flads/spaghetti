@@ -34,9 +34,9 @@
                     <li class="prevent-select"><a href="/about">About</a></li>
                     <li class="prevent-select"><a href="/contact">Contact</a></li>
 
-                    <li class="dark-theme-activator prevent-select pointer">
-                        <i class="fa-solid fa-moon"></i>
-                        <i class="fa-solid fa-sun"></i>
+                    <li class="dark-theme-activator pointer">
+                        <i class="fa-solid fa-moon prevent-select"></i>
+                        <i class="fa-solid fa-sun prevent-select"></i>
                     </li>
                 </ul>
             </nav>
