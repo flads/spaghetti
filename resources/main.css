@@ -81,6 +81,15 @@ p a {
   align-items: center;
 }
 
+.container div.content {
+  width: 100%;
+}
+
+code {
+  width: 100%;
+  white-space: break-spaces;
+}
+
 .prevent-select {
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
