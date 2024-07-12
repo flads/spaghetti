@@ -26,6 +26,8 @@ if ($form["title"] && $form["summary"] && $form["content"]) {
     $postContent .= $form["content"];
 
     file_put_contents($filePath, $postContent);
+
+    header('Location: /');
 }
 ?>
 
