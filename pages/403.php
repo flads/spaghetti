@@ -1,13 +1,6 @@
 <?php
-session_start();
-
-if ($_SESSION["failed_login_attempts"] >= 3) {
-    include 'pages/403.php';
-    return;
-}
-
-if ($_GET['logout']) {
-    unset($_SESSION['logged']);
+if ($_SESSION["failed_login_attempts"] < 3) {
+    return header('Location: /');
 }
 ?>
 
@@ -17,7 +10,7 @@ if ($_GET['logout']) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spaghetti</title>
+    <title>Spaghetti - Forbidden</title>
 
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,49 +37,20 @@ if ($_GET['logout']) {
             <a class="logo prevent-select" href="/">Spaghetti</a>
             <nav>
                 <ul>
-                    <li class="prevent-select"><a href="/about">About</a></li>
-                    <li class="prevent-select"><a href="/contact">Contact</a></li>
-
                     <li class="dark-theme-activator pointer">
                         <i class="fa-solid fa-moon prevent-select"></i>
                         <i class="fa-solid fa-sun prevent-select"></i>
                     </li>
-
-                    <?php if ($_SESSION["logged"]) { ?>
-                        <li class="logout pointer">
-                            <i class="fa-solid fa-right-from-bracket"></i>
-                        </li>
-                    <?php } ?>
                 </ul>
             </nav>
         </div>
     </header>
-    <?php
-    $uri = $_SERVER['REQUEST_URI'];
-
-    switch ($uri) {
-        case '/':
-            include 'pages/posts.php';
-            break;
-        case '/forbidden':
-            include 'pages/403.php';
-            break;
-        case '/about':
-            include 'pages/about.php';
-            break;
-        case '/login':
-            include 'pages/login.php';
-            break;
-        case '/admin/add-new-post':
-            include 'pages/add-new-post.php';
-            break;
-        default:
-            include !file(__DIR__ . '/posts' . str_replace('/post', '', $uri) . '.md')
-                ? 'pages/404.php'
-                : 'pages/post.php';
-            break;
-    }
-    ?>
+    <main class="not-found">
+        <div class="container">
+            <h2 class="m-0">403</h2>
+            <p>Many login attempts!</p>
+        </div>
+    </main>
     <footer>
         <div class="socials">
             <a target="_blank" href="http://github.com/"><i class="fa-brands fa-github"></i></a>
@@ -98,18 +62,6 @@ if ($_GET['logout']) {
     </footer>
 
     <script src="/resources/main.js"></script>
-    <script>
-        const logoutButton = document.querySelector("li.logout");
-
-        if (logoutButton) {
-            logoutButton.addEventListener("click", () => {
-                fetch('/index.php?logout=true', {
-                        method: 'GET'
-                    })
-                    .then(() => location.reload());
-            });
-        }
-    </script>
 </body>
 
 </html>

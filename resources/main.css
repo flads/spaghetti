@@ -198,6 +198,10 @@ main.add-new-post form {
   margin-top: 40px;
 }
 
+main.login form {
+  margin-top: 160px;
+}
+
 form div.form-group {
   display: flex;
   flex-direction: column;
@@ -251,6 +255,45 @@ form div.form-group:last-child {
   width: 100%;
   display: flex;
   align-items: end;
+}
+
+form.login div.form-group {
+  width: 100%;
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: start;
+  gap: 16px;
+}
+
+form.login div.form-group div {
+  width: 40%;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: start;
+  gap: 4px;
+}
+
+form.login div.form-group input {
+  width: 100%;
+}
+
+form.login div.form-group span {
+  font-size: 0.85rem;
+  color: #e3655b;
+}
+
+form.login div.form-group button {
+  width: 38px;
+  padding: 9px 0;
+}
+
+form.login input,
+form.login input:focus {
+  padding: 2px 5px;
+  font-size: 1rem;
+  font-family: "Roboto", serif;
 }
 
 form button {
