@@ -9,11 +9,11 @@ $filePath = __DIR__ . '/../posts/' . str_replace('/post/', '', $uri) . '.md';
 $file = file($filePath);
 
 $post = [
-    'title' => substr($file[1], 8, -2),
-    'date' => date_format(date_create(substr($file[2], 6, -1)), 'd-m-Y'),
-    'summary' => $parsedown->text(substr($file[3], 10, -2)),
-    'draft' => substr($file[4], 6, -1),
-    'pinned' => substr($file[5], 8, -1),
+    'title' => mb_substr($file[1], 8, -2),
+    'date' => date_format(date_create(mb_substr($file[2], 6, -1)), 'd-m-Y'),
+    'summary' => $parsedown->text(mb_substr($file[3], 10, -2)),
+    'draft' => mb_substr($file[4], 6, -1),
+    'pinned' => mb_substr($file[5], 8, -1),
 ];
 
 for ($i = 0; $i < 7; $i++) {

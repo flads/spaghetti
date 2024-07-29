@@ -1,6 +1,10 @@
 <?php
 require(__DIR__ . '/../resources/php/parsedown-1.7.4/Parsedown.php');
 
+session_start();
+
+$isLogged = isset($_SESSION["logged"]) && $_SESSION["logged"];
+
 $parsedown = new Parsedown();
 
 $filenames = array_diff(scandir(__DIR__ . '/../posts/'), array('..', '.'));
@@ -12,30 +16,52 @@ $posts = array_map(function ($filename) use ($parsedown) {
 
     return [
         'filename' => str_replace('.md', '', $filename),
-        'title' => substr($file[1], 8, -2),
-        'date' => substr($file[2], 6, -1),
-        'formattedDate' => date_format(date_create(substr($file[2], 6, -1)), 'd-m-Y'),
-        'summary' => $parsedown->text(substr($file[3], 10, -2)),
-        'draft' => substr($file[4], 6, -1),
-        'pinned' => substr($file[5], 8, -1),
+        'title' => mb_substr($file[1], 8, -2),
+        'date' => mb_substr($file[2], 6, -1),
+        'formattedDate' => date_format(date_create(mb_substr($file[2], 6, -1)), 'd-m-Y'),
+        'summary' => $parsedown->text(mb_substr($file[3], 10, -2)),
+        'draft' => mb_substr($file[4], 6, -1),
+        'pinned' => mb_substr($file[5], 8, -1),
     ];
 }, $postsFilenames);
 
 usort($posts, fn ($a, $b) => $b['date'] <=> $a['date']);
+
+if ($_SESSION['logged'] && $_GET['file_to_delete']) {
+    rename(
+        __DIR__ . '/../posts/' . $_GET['file_to_delete'] . '.md',
+        __DIR__ . '/../posts/_trash/' . $_GET['file_to_delete'] . '.md'
+    );
+}
 ?>
 
 <main class="posts">
     <div class="container">
+        <div class="posts-header">
+            <?php if ($isLogged) { ?>
+                <button class="add-new-post">
+                    Add new Post
+                </button>
+            <?php } ?>
+        </div>
         <ul>
             <?php foreach ($posts as $post) { ?>
                 <li>
-                    <div>
-                        <h2 class="m-0">
-                            <a href="/post/<?php echo $post['filename'] ?>">
-                                <?php echo $post['title'] ?>
-                            </a>
-                        </h2>
-                        <p class="m-0"><?php echo $post['formattedDate'] ?></p>
+                    <div class="post-header">
+                        <div>
+                            <h2 class="m-0">
+                                <a href="/post/<?php echo $post['filename'] ?>">
+                                    <?php echo $post['title'] ?>
+                                </a>
+                            </h2>
+                            <p class="m-0"><?php echo $post['formattedDate'] ?></p>
+                        </div>
+                        <div>
+                            <?php if ($isLogged) { ?>
+                                <i class="fa-solid fa-pencil" title="Edit post"></i>
+                                <i class="fa-solid fa-trash" data-filename="<?php echo $post['filename'] ?>" title="Delete post"></i>
+                            <?php } ?>
+                        </div>
                     </div>
                     <?php echo $post['summary'] ?>
                 </li>
@@ -45,4 +71,83 @@ usort($posts, fn ($a, $b) => $b['date'] <=> $a['date']);
             <?php } ?>
         </ul>
     </div>
+
+    <div class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p>Do you really want to delete this post?</p>
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+            <div class="modal-body">
+                <p>Deleted files are moved to a "_trash" folder in the project.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel">
+                    Cancel
+                </button>
+                <button class="confirm">
+                    Yes
+                </button>
+            </div>
+        </div>
+    </div>
 </main>
+
+<script>
+    const addNewPostButton = document.querySelector("button.add-new-post");
+    const deleteButtons = document.querySelectorAll("i.fa-trash");
+    const modal = document.querySelector("div.modal");
+    const modalCloseButton = document.querySelector("div.modal i.fa-xmark");
+    const modalCancelButton = document.querySelector("div.modal button.cancel");
+    const modalConfirmButton = document.querySelector("div.modal button.confirm");
+
+    if (addNewPostButton) {
+        addNewPostButton.onclick = (event) => {
+            window.location.href = '/admin/add-new-post';
+        }
+    }
+
+    let target;
+
+    if (deleteButtons) {
+        deleteButtons.forEach(deleteButton => {
+            deleteButton.onclick = (event) => {
+                target = event.target;
+
+                modal.style.display = 'block';
+            }
+        });
+    }
+
+    if (modal) {
+        modalCloseButton.onclick = () => {
+            modal.style.display = "none";
+        }
+
+        modalCancelButton.onclick = () => {
+            modal.style.display = "none";
+        }
+
+        modalConfirmButton.onclick = () => {
+            const filename = target.getAttribute('data-filename');
+
+            fetch('/pages/posts.php?file_to_delete=' + filename, {
+                method: 'GET'
+            }).then(() => location.reload());
+        }
+    }
+
+    if (modal) {
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                modal.style.display = 'none';
+            }
+        });
+    }
+</script>

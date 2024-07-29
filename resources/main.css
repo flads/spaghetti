@@ -7,6 +7,7 @@
   --moon-icon-display: block;
   --form-border: solid #d5d5d5 1px;
   --button-background: #e7eaee;
+  --secondary-icon-color: #707070;
 }
 
 [data-theme="dark"] {
@@ -18,6 +19,7 @@
   --moon-icon-display: none;
   --form-border: solid #474747 1px;
   --button-background: #1f1f1f;
+  --secondary-icon-color: #707070;
 }
 
 html,
@@ -156,7 +158,31 @@ main.posts li {
   margin-bottom: 50px;
 }
 
-main.posts li div {
+main.posts div.posts-header {
+  width: 100%;
+  margin-bottom: 50px;
+  display: flex;
+  justify-content: end;
+}
+
+main.posts li div.post-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+main.posts li div.post-header div:last-child {
+  display: flex;
+  flex-flow: row;
+  gap: 8px;
+}
+
+main.posts li div.post-header i {
+  margin: 8px 10px 0 0;
+  cursor: pointer;
+  color: var(--secondary-icon-color);
+}
+
+main.posts li div.post-header div {
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -166,10 +192,75 @@ main.posts li > p {
   margin-top: 16px;
 }
 
-main.posts li div p,
+main.posts li div.post-header div p,
 main.post div.title p {
   margin-top: 2px;
   font-size: 0.9rem;
+}
+
+main.posts div.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+main.posts div.modal p {
+  margin: 0;
+}
+
+main.posts div.modal div.modal-content {
+  background-color: var(--bg-color);
+  margin: 20% auto;
+  padding: 20px;
+  border-radius: 3px;
+  width: 30%;
+}
+
+main.posts div.modal div.modal-header {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+}
+
+main.posts div.modal div.modal-header i.fa-xmark {
+  cursor: pointer;
+  color: var(--secondary-icon-color);
+}
+
+main.posts div.modal div.modal-body {
+  margin: 30px 0;
+}
+
+main.posts div.modal div.modal-body p {
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+main.posts div.modal div.modal-footer {
+  display: flex;
+  justify-content: end;
+  gap: 8px;
+}
+
+main.posts button.add-new-post,
+main.posts div.modal div.modal-footer button {
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: var(--form-border);
+  color: var(--text-color);
+  border-radius: 3px;
+  width: 110px;
+  min-height: 28px;
+  background-color: var(--button-background);
 }
 
 main.post p img {
@@ -279,7 +370,13 @@ form.login div.form-group input {
   width: 100%;
 }
 
-form.login div.form-group span {
+span.error.general-error {
+  margin-top: 7px;
+  font-size: 0.9rem;
+  color: #e3655b;
+}
+
+form div.form-group span.error {
   font-size: 0.85rem;
   color: #e3655b;
 }
