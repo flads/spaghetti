@@ -1,55 +1,12 @@
-<?php
-require(__DIR__ . "/../resources/php/helpers.php");
-
-if ($_SESSION["logged"]) {
-    return header('Location: /');
-}
-
-$form = $_POST;
-$errorMessage = null;
-
-if (!empty($form["password"])) {
-    $env = parse_ini_file('.env');
-
-    if ($form["password"] === $env["PASSWORD"]) {
-        unset($_SESSION["failed_login_attempts"]);
-        $_SESSION["logged"] = true;
-
-        return header('Location: /');
-    }
-
-    $_SESSION["failed_login_attempts"] = ($_SESSION["failed_login_attempts"] ?? 0) + 1;
-
-    $attempts = $_SESSION["failed_login_attempts"];
-
-    if ($attempts >= 3) {
-        return header('Location: /');
-    }
-
-    $errorMessage = 'Invalid password! ' . (3 - $attempts) . ' attempts left.';
-}
-?>
-
-<script>
-    document.addEventListener('keydown', (event) => {
-        if (event.keyCode === 13 && event.ctrlKey) {
-            document.getElementById('submit').click();
-        }
-    });
-</script>
-
 <main class="login">
     <div class="container">
         <form class="login w-100" action="" method="POST">
             <div class="form-group">
                 <div>
                     <input id="password" name="password" class="w-50" type="password" placeholder="Password...">
-
-                    <?php if ($errorMessage) { ?>
-                        <span><?php echo $errorMessage ?></span>
-                    <?php } ?>
+                    <span class="error password-error"></span>
                 </div>
-                <button id="submit" type="submit">
+                <button id="submit" class="submit" type="submit">
                     <i class="fa-solid fa-right-to-bracket"></i>
                 </button>
             </div>
@@ -58,5 +15,42 @@ if (!empty($form["password"])) {
 </main>
 
 <script>
+    const submitButton = document.querySelector("div.form-group button.submit");
+
+    document.addEventListener('keydown', (event) => {
+        if (event.keyCode === 13 && event.ctrlKey) {
+            submitButton.click();;
+        }
+    });
+
     document.getElementById('password').focus();
+
+    submitButton.onclick = async (event) => {
+        const passwordSpan = document.querySelector(`span.password-error`);
+
+        try {
+            passwordSpan.innerHTML = '';
+
+            event.preventDefault()
+
+            const form = new FormData(document.querySelector('form'));
+
+            const response = await fetch('/functions/login.php', {
+                method: 'POST',
+                body: form
+            });
+
+            if (response.status === 422) {
+                const data = await response.json();
+
+                passwordSpan.innerHTML = data.errors[0].message;
+
+                return;
+            }
+
+            window.location.href = '/'
+        } catch (error) {
+            passwordSpan.innerHTML = 'Oops! Something went wrong!';
+        }
+    };
 </script>
