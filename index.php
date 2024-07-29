@@ -9,7 +9,7 @@ if (isset($_GET['logout']) && $_GET['logout']) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
@@ -27,10 +27,17 @@ if (isset($_GET['logout']) && $_GET['logout']) {
     <link rel="stylesheet" href="/resources/main.css">
 
     <script>
-        const spaghettiLocalStorage = localStorage.getItem("spaghetti");
+        const spaghettiLocalStorage = JSON.parse(localStorage.getItem('spaghetti'));
 
-        if (spaghettiLocalStorage && JSON.parse(spaghettiLocalStorage)["isDarkTheme"]) {
-            document.querySelector("html").setAttribute("data-theme", "dark");
+        if (
+            spaghettiLocalStorage &&
+            spaghettiLocalStorage.hasOwnProperty('isDarkTheme')
+        ) {
+            const isDarkTheme = spaghettiLocalStorage['isDarkTheme'];
+
+            document.querySelector('html').setAttribute(
+                'data-theme', isDarkTheme ? 'dark' : 'light'
+            );
         }
     </script>
 </head>
