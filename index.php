@@ -1,12 +1,9 @@
 <?php
 session_start();
 
-if ($_SESSION["failed_login_attempts"] >= 3) {
-    include 'pages/403.php';
-    return;
-}
+$isLogged = isset($_SESSION["logged"]) && $_SESSION["logged"];
 
-if ($_GET['logout']) {
+if (isset($_GET['logout']) && $_GET['logout']) {
     unset($_SESSION['logged']);
 }
 ?>
@@ -52,9 +49,9 @@ if ($_GET['logout']) {
                         <i class="fa-solid fa-sun prevent-select"></i>
                     </li>
 
-                    <?php if ($_SESSION["logged"]) { ?>
+                    <?php if ($isLogged) { ?>
                         <li class="logout pointer">
-                            <i class="fa-solid fa-right-from-bracket"></i>
+                            <i class="fa-solid fa-right-from-bracket" title="Logout"></i>
                         </li>
                     <?php } ?>
                 </ul>
@@ -62,29 +59,42 @@ if ($_GET['logout']) {
         </div>
     </header>
     <?php
-    $uri = $_SERVER['REQUEST_URI'];
+    $userIsBlocked = isset($_SESSION["failed_login_attempts"]) && $_SESSION["failed_login_attempts"] >= 3;
 
-    switch ($uri) {
-        case '/':
-            include 'pages/posts.php';
-            break;
-        case '/forbidden':
-            include 'pages/403.php';
-            break;
-        case '/about':
-            include 'pages/about.php';
-            break;
-        case '/login':
-            include 'pages/login.php';
-            break;
-        case '/admin/add-new-post':
-            include 'pages/add-new-post.php';
-            break;
-        default:
-            include !file(__DIR__ . '/posts' . str_replace('/post', '', $uri) . '.md')
-                ? 'pages/404.php'
-                : 'pages/post.php';
-            break;
+    if ($userIsBlocked) {
+        include 'pages/403.php';
+    }
+
+    if (!$userIsBlocked) {
+        $uri = $_SERVER['REQUEST_URI'];
+
+        switch ($uri) {
+            case '/':
+                include 'pages/posts.php';
+                break;
+            case '/about':
+                include 'pages/about.php';
+                break;
+            case '/login':
+                if (!$isLogged) {
+                    include 'pages/login.php';
+                    break;
+                }
+                header('Location: /');
+                break;
+            case '/admin/add-new-post':
+                if ($isLogged) {
+                    include 'pages/add-new-post.php';
+                    break;
+                }
+                include 'pages/404.php';
+                break;
+            default:
+                include !file(__DIR__ . '/posts' . str_replace('/post', '', $uri) . '.md')
+                    ? 'pages/404.php'
+                    : 'pages/post.php';
+                break;
+        }
     }
     ?>
     <footer>
@@ -106,7 +116,7 @@ if ($_GET['logout']) {
                 fetch('/index.php?logout=true', {
                         method: 'GET'
                     })
-                    .then(() => location.reload());
+                    .then(() => window.location.href = '/');
             });
         }
     </script>

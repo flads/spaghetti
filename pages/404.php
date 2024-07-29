@@ -7,9 +7,9 @@ $filePath = __DIR__ . '/../posts/_404.md';
 $content = $parsedown->text(file_get_contents($filePath));
 ?>
 
-<main class="not-found">
+<main>
     <div class="container">
         <h2 class="m-0">404</h2>
-        <p class="m-0"><?php echo $content ?></p>
+        <?php echo $content ?>
     </div>
 </main>
