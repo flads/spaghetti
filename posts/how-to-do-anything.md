@@ -1,6 +1,6 @@
 ---
 title: "How To Do Anything"
-date: 2024-01-03
+date: 2024-07-13 00:59:08
 summary: "Lorem ipsum dolor sit amet, consectetur sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
 draft: false
 pinned: false
