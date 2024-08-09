@@ -26,13 +26,6 @@ $posts = array_map(function ($filename) use ($parsedown) {
 }, $postsFilenames);
 
 usort($posts, fn ($a, $b) => $b['date'] <=> $a['date']);
-
-if ($_SESSION['logged'] && $_GET['file_to_delete']) {
-    rename(
-        __DIR__ . '/../posts/' . $_GET['file_to_delete'] . '.md',
-        __DIR__ . '/../posts/_trash/' . $_GET['file_to_delete'] . '.md'
-    );
-}
 ?>
 
 <main class="posts">
@@ -131,7 +124,7 @@ if ($_SESSION['logged'] && $_GET['file_to_delete']) {
         modalConfirmButton.onclick = () => {
             const filename = target.getAttribute('data-filename');
 
-            fetch('/pages/posts.php?file_to_delete=' + filename, {
+            fetch('/functions/deletePost.php?file_to_delete=' + filename, {
                 method: 'GET'
             }).then(() => location.reload());
         }
