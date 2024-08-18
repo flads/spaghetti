@@ -73,9 +73,13 @@ if (isset($_GET['logout']) && $_GET['logout']) {
     }
 
     if (!$userIsBlocked) {
-        $uri = $_SERVER['REQUEST_URI'];
+        $parsedUrl = parse_url($_SERVER['REQUEST_URI']);
+        $path = $parsedUrl['path'];
+        $query = $parsedUrl['query'];
 
-        switch ($uri) {
+        parse_str($query, $parsedQuery);
+
+        switch ($path) {
             case '/':
                 include 'pages/posts.php';
                 break;
@@ -96,8 +100,15 @@ if (isset($_GET['logout']) && $_GET['logout']) {
                 }
                 include 'pages/404.php';
                 break;
+            case '/admin/edit-post':
+                if ($isLogged) {
+                    include 'pages/edit-post.php';
+                    break;
+                }
+                include 'pages/404.php';
+                break;
             default:
-                include !file(__DIR__ . '/posts' . str_replace('/post', '', $uri) . '.md')
+                include !file(__DIR__ . '/posts' . str_replace('/post', '', $_SERVER['REQUEST_URI']) . '.md')
                     ? 'pages/404.php'
                     : 'pages/post.php';
                 break;

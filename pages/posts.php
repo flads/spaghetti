@@ -1,14 +1,10 @@
 <?php
 require(__DIR__ . '/../resources/php/parsedown-1.7.4/Parsedown.php');
 
-session_start();
-
-$isLogged = isset($_SESSION["logged"]) && $_SESSION["logged"];
-
 $parsedown = new Parsedown();
 
 $filenames = array_diff(scandir(__DIR__ . '/../posts/'), array('..', '.'));
-$postsFilenames = array_filter($filenames, fn ($filename) => $filename[0] !== '_');
+$postsFilenames = array_filter($filenames, fn($filename) => $filename[0] !== '_');
 
 $posts = array_map(function ($filename) use ($parsedown) {
     $filePath = __DIR__ . '/../posts/' . $filename;
@@ -25,7 +21,7 @@ $posts = array_map(function ($filename) use ($parsedown) {
     ];
 }, $postsFilenames);
 
-usort($posts, fn ($a, $b) => $b['date'] <=> $a['date']);
+usort($posts, fn($a, $b) => $b['date'] <=> $a['date']);
 ?>
 
 <main class="posts">
@@ -49,9 +45,9 @@ usort($posts, fn ($a, $b) => $b['date'] <=> $a['date']);
                             </h2>
                             <p class="m-0"><?php echo $post['formattedDate'] ?></p>
                         </div>
-                        <div>
+                        <div class="post-actions">
                             <?php if ($isLogged) { ?>
-                                <i class="fa-solid fa-pencil" title="Edit post"></i>
+                                <i class="fa-solid fa-pencil" data-filename="<?php echo $post['filename'] ?>" title="Edit post"></i>
                                 <i class="fa-solid fa-trash" data-filename="<?php echo $post['filename'] ?>" title="Delete post"></i>
                             <?php } ?>
                         </div>
@@ -88,7 +84,8 @@ usort($posts, fn ($a, $b) => $b['date'] <=> $a['date']);
 
 <script>
     const addNewPostButton = document.querySelector("button.add-new-post");
-    const deleteButtons = document.querySelectorAll("i.fa-trash");
+    const editButtons = document.querySelectorAll("div.post-actions i.fa-pencil");
+    const deleteButtons = document.querySelectorAll("div.post-actions i.fa-trash");
     const modal = document.querySelector("div.modal");
     const modalCloseButton = document.querySelector("div.modal i.fa-xmark");
     const modalCancelButton = document.querySelector("div.modal button.cancel");
@@ -101,6 +98,16 @@ usort($posts, fn ($a, $b) => $b['date'] <=> $a['date']);
     }
 
     let target;
+
+    if (editButtons) {
+        editButtons.forEach(editButton => {
+            editButton.onclick = (event) => {
+                const filename = event.target.getAttribute('data-filename');
+
+                window.location.href = `/admin/edit-post?file=${filename}`;
+            }
+        });
+    }
 
     if (deleteButtons) {
         deleteButtons.forEach(deleteButton => {

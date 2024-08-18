@@ -158,25 +158,29 @@ main.posts li {
   margin-bottom: 50px;
 }
 
-main.posts div.posts-header {
+main.posts div.posts-header,
+main.post div.post-header {
   width: 100%;
   margin-bottom: 50px;
   display: flex;
   justify-content: end;
 }
 
-main.posts li div.post-header {
+main.posts li div.post-header,
+main.post div.post-header {
   display: flex;
   justify-content: space-between;
 }
 
-main.posts li div.post-header div:last-child {
+main.posts li div.post-header div:last-child,
+main.post div.post-header div:last-child {
   display: flex;
   flex-flow: row;
   gap: 8px;
 }
 
-main.posts li div.post-header i {
+main.posts li div.post-header i,
+main.post div.post-header i {
   margin: 8px 10px 0 0;
   cursor: pointer;
   color: var(--secondary-icon-color);
@@ -192,13 +196,17 @@ main.posts li > p {
   margin-top: 16px;
 }
 
-main.posts li div.post-header div p,
-main.post div.title p {
+main.posts li div.post-header div p {
   margin-top: 2px;
   font-size: 0.9rem;
 }
 
-main.posts div.modal {
+main div.title p {
+  margin-top: 5px;
+  font-size: 0.9rem;
+}
+
+div.modal {
   display: none;
   position: fixed;
   z-index: 1;
@@ -211,11 +219,11 @@ main.posts div.modal {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-main.posts div.modal p {
+div.modal p {
   margin: 0;
 }
 
-main.posts div.modal div.modal-content {
+div.modal div.modal-content {
   background-color: var(--bg-color);
   margin: 20% auto;
   padding: 20px;
@@ -223,7 +231,7 @@ main.posts div.modal div.modal-content {
   width: 30%;
 }
 
-main.posts div.modal div.modal-header {
+div.modal div.modal-header {
   display: flex;
   flex-flow: row;
   justify-content: space-between;
@@ -231,28 +239,28 @@ main.posts div.modal div.modal-header {
   font-weight: 600;
 }
 
-main.posts div.modal div.modal-header i.fa-xmark {
+div.modal div.modal-header i.fa-xmark {
   cursor: pointer;
   color: var(--secondary-icon-color);
 }
 
-main.posts div.modal div.modal-body {
+div.modal div.modal-body {
   margin: 30px 0;
 }
 
-main.posts div.modal div.modal-body p {
+div.modal div.modal-body p {
   font-size: 0.9rem;
   font-weight: 400;
 }
 
-main.posts div.modal div.modal-footer {
+div.modal div.modal-footer {
   display: flex;
   justify-content: end;
   gap: 8px;
 }
 
 main.posts button.add-new-post,
-main.posts div.modal div.modal-footer button {
+div.modal div.modal-footer button {
   font-size: 0.9rem;
   cursor: pointer;
   border: var(--form-border);
@@ -285,8 +293,9 @@ main.about div.socials {
   font-size: 18px;
 }
 
+main.edit-post form,
 main.add-new-post form {
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 main.login form {
