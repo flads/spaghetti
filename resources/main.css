@@ -142,10 +142,12 @@ header nav ul {
 }
 
 header li.dark-theme-activator i.fa-sun {
+  margin-top: 1px;
   display: var(--sun-icon-display);
 }
 
 header li.dark-theme-activator i.fa-moon {
+  margin-top: 1px;
   display: var(--moon-icon-display);
 }
 
@@ -158,32 +160,37 @@ main.posts li {
 }
 
 main.posts div.posts-header,
-main.post div.post-header {
+main.post div.post-header,
+main.about div.page-header {
   width: 100%;
   margin-bottom: 20px;
   display: flex;
   justify-content: end;
 }
 
-main.post div.post-header {
+main.post div.post-header,
+main.about div.page-header {
   margin-bottom: 0px;
 }
 
 main.posts li div.post-header,
-main.post div.post-header {
+main.post div.post-header,
+main.about div.page-header {
   display: flex;
   justify-content: space-between;
 }
 
 main.posts li div.post-header div:last-child,
-main.post div.post-header div:last-child {
+main.post div.post-header div:last-child,
+main.about div.page-header div:last-child {
   display: flex;
   flex-flow: row;
   gap: 8px;
 }
 
 main.posts li div.post-header i,
-main.post div.post-header i {
+main.post div.post-header i,
+main.about div.page-header i {
   margin: 8px 10px 0 0;
   cursor: pointer;
   color: var(--secondary-icon-color);

@@ -5,6 +5,8 @@ require(__DIR__ . '/../helpers/getPostsByTitle.php');
 $form = $_POST;
 $errors = [];
 
+$isAboutPage = $form['filename'] === '_about';
+
 $oldTitle = $form['oldTitle'];
 $title = $form['title'];
 $summary = $form['summary'];
@@ -14,48 +16,50 @@ $content = $form['content'];
 if (!$title) {
     $errors[] = [
         'field' => 'title',
-        'message' => 'Title post is required!',
-    ];
-}
-
-if (!$summary) {
-    $errors[] = [
-        'field' => 'summary',
-        'message' => 'Summary post is required!',
+        'message' => 'Title is required!',
     ];
 }
 
 if (!$content) {
     $errors[] = [
         'field' => 'content',
-        'message' => 'Content post is required!',
+        'message' => 'Content is required!',
     ];
 }
 
-if ($title !== $oldTitle) {
-    $postsByTitle = getPostsByTitle($title);
-    $isTitleInUser = !empty($postsByTitle);
-
-    if ($isTitleInUser) {
+if (!$isAboutPage) {
+    if (!$summary) {
         $errors[] = [
-            'field' => 'title',
-            'message' => 'This title is already in use!',
+            'field' => 'summary',
+            'message' => 'Summary is required!',
         ];
     }
-}
 
-if ($title[0] === '_') {
-    $errors[] = [
-        'field' => 'title',
-        'message' => 'The first character cannot be an underscore!',
-    ];
-}
+    if (($title !== $oldTitle)) {
+        $postsByTitle = getPostsByTitle($title);
+        $isTitleInUser = !empty($postsByTitle);
 
-if (strlen($summary) > 255) {
-    $errors[] = [
-        'field' => 'summary',
-        'message' => 'The summary can only have 255 characters!',
-    ];
+        if ($isTitleInUser) {
+            $errors[] = [
+                'field' => 'title',
+                'message' => 'This title is already in use!',
+            ];
+        }
+    }
+
+    if (($title[0] === '_')) {
+        $errors[] = [
+            'field' => 'title',
+            'message' => 'The first character cannot be an underscore!',
+        ];
+    }
+
+    if ((strlen($summary) > 255)) {
+        $errors[] = [
+            'field' => 'summary',
+            'message' => 'The summary can only have 255 characters!',
+        ];
+    }
 }
 
 if (!empty($errors)) {
@@ -67,23 +71,24 @@ if (!empty($errors)) {
     return;
 }
 
-$oldFilename = toKebab($oldTitle) . '.md';
-$oldFilePath = __DIR__ . '/../posts/' . str_replace('/post/', '', $oldFilename);
+$oldFilename = $isAboutPage
+    ? '_about.md'
+    : toKebab($oldTitle) . '.md';
 
-$oldFile = file($oldFilePath);
-
-unlink($oldFilePath);
-
-$filename = toKebab($title) . '.md';
-$filePath = __DIR__ . '/../posts/' . str_replace('/post/', '', $filename);
+$oldFilePath = __DIR__ . '/../posts/' . $oldFilename;
 
 $postSettings = [
     'title' => '"' . $title . '"',
-    'date' => mb_substr($oldFile[2], 6, -1),
-    'summary' => '"' . $form['summary'] . '"',
-    'draft' => $form['draft'] ?? 'false',
-    'pinned' => $form['pinned'] ?? 'false',
 ];
+
+if (!$isAboutPage) {
+    $oldFile = file($oldFilePath);
+
+    $postSettings['date'] = mb_substr($oldFile[2], 6, -1);
+    $postSettings['summary'] = '"' . $form['summary'] . '"';
+    $postSettings['draft'] = $form['draft'] ?? 'false';
+    $postSettings['pinned'] = $form['pinned'] ?? 'false';
+}
 
 $postContent = '---' . PHP_EOL;
 
@@ -95,7 +100,15 @@ $postContent .= '---' . PHP_EOL;
 $postContent .= PHP_EOL;
 $postContent .= $form['content'];
 
-file_put_contents($filePath, $postContent);
+unlink($oldFilePath);
+
+$newFilename = $isAboutPage
+    ? '_about.md'
+    : toKebab($title) . '.md';
+
+$newFilePath = __DIR__ . '/../posts/' . $newFilename;
+
+file_put_contents($newFilePath, $postContent);
 
 echo json_encode([
     'filename' => toKebab($title)

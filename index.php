@@ -99,7 +99,7 @@ if (isset($_GET['logout']) && $_GET['logout']) {
                 }
                 include 'pages/404.php';
                 break;
-            case '/admin/edit-post':
+            case '/admin/edit-post' || '/admin/edit-page':
                 if ($isLogged) {
                     include 'pages/edit-post.php';
                     break;

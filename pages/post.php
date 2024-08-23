@@ -27,7 +27,7 @@ $post['content'] = $parsedown->text(implode($file));
 <main class="post">
     <div class="container">
         <div class="post-header">
-            <div class=" title">
+            <div class="title">
                 <h2 class="m-0">
                     <?php echo $post['title'] ?>
                 </h2>
