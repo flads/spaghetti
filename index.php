@@ -49,7 +49,6 @@ if (isset($_GET['logout']) && $_GET['logout']) {
             <nav>
                 <ul>
                     <li class="prevent-select"><a href="/about">About</a></li>
-                    <li class="prevent-select"><a href="/contact">Contact</a></li>
 
                     <li class="dark-theme-activator pointer">
                         <i class="fa-solid fa-moon prevent-select"></i>
