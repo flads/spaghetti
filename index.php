@@ -74,7 +74,7 @@ if (isset($_GET['logout']) && $_GET['logout']) {
     if (!$userIsBlocked) {
         $parsedUrl = parse_url($_SERVER['REQUEST_URI']);
         $path = $parsedUrl['path'];
-        $query = $parsedUrl['query'];
+        $query = $parsedUrl['query'] ?? null;
 
         parse_str($query, $parsedQuery);
 
@@ -99,7 +99,8 @@ if (isset($_GET['logout']) && $_GET['logout']) {
                 }
                 include 'pages/404.php';
                 break;
-            case '/admin/edit-post' || '/admin/edit-page':
+            case '/admin/edit-post':
+            case '/admin/edit-page':
                 if ($isLogged) {
                     include 'pages/edit-post.php';
                     break;

@@ -1,6 +1,10 @@
 <?php
 $filename = $parsedQuery['file'];
 
+if (!$filename) {
+    header('Location: /404');
+}
+
 require(__DIR__ . '/../resources/php/parsedown-1.7.4/Parsedown.php');
 
 $parsedown = new Parsedown();
