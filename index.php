@@ -6,15 +6,22 @@ $isLogged = isset($_SESSION["logged"]) && $_SESSION["logged"];
 if (isset($_GET['logout']) && $_GET['logout']) {
     unset($_SESSION['logged']);
 }
+
+$env = parse_ini_file(__DIR__ . '/.env');
+
+$websiteName = $env["WEBSITE_NAME"];
+$loginUrl = $env["LOGIN_URL"];
+$githubUser = $env["GITHUB_USER"];
+$linkedinUser = $env["LINKEDIN_USER"];
 ?>
 
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="dark" data-login-url="<?php echo $loginUrl ?>">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spaghetti</title>
+    <title><?php echo $websiteName ?></title>
 
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,7 +52,7 @@ if (isset($_GET['logout']) && $_GET['logout']) {
 <body>
     <header>
         <div class="container">
-            <a class="logo prevent-select" href="/">Spaghetti</a>
+            <a class="logo prevent-select" href="/"><?php echo $websiteName ?></a>
             <nav>
                 <ul>
                     <li class="prevent-select"><a href="/about">About</a></li>
@@ -56,6 +63,10 @@ if (isset($_GET['logout']) && $_GET['logout']) {
                     </li>
 
                     <?php if ($isLogged) { ?>
+                        <li class="separator">|</li>
+                        <li class="settings pointer">
+                            <i class="fa-solid fa-cog" title="Logout"></i>
+                        </li>
                         <li class="logout pointer">
                             <i class="fa-solid fa-right-from-bracket" title="Logout"></i>
                         </li>
@@ -85,24 +96,31 @@ if (isset($_GET['logout']) && $_GET['logout']) {
             case '/about':
                 include 'pages/about.php';
                 break;
-            case '/login':
+            case '/' . $loginUrl:
                 if (!$isLogged) {
                     include 'pages/login.php';
                     break;
                 }
                 header('Location: /');
                 break;
-            case '/admin/add-new-post':
+            case '/' . $loginUrl . '/add-new-post':
                 if ($isLogged) {
                     include 'pages/add-new-post.php';
                     break;
                 }
                 include 'pages/404.php';
                 break;
-            case '/admin/edit-post':
-            case '/admin/edit-page':
+            case '/' . $loginUrl . '/edit-post':
+            case '/' . $loginUrl . '/edit-page':
                 if ($isLogged) {
                     include 'pages/edit-post.php';
+                    break;
+                }
+                include 'pages/404.php';
+                break;
+            case '/' . $loginUrl . '/settings':
+                if ($isLogged) {
+                    include 'pages/settings.php';
                     break;
                 }
                 include 'pages/404.php';
@@ -117,8 +135,8 @@ if (isset($_GET['logout']) && $_GET['logout']) {
     ?>
     <footer>
         <div class="socials">
-            <a target="_blank" href="http://github.com/"><i class="fa-brands fa-github"></i></a>
-            <a target="_blank" href="http://linkedin.com/"><i class="fa-brands fa-linkedin"></i></a>
+            <a target="_blank" href="http://github.com/<?php echo $githubUser ?>"><i class="fa-brands fa-github"></i></a>
+            <a target="_blank" href="http://linkedin.com/in/<?php echo $linkedinUser ?>"><i class="fa-brands fa-linkedin"></i></a>
         </div>
         <div>
             <p>Made with <a target="_blank" href="https://spaghetti.rest">Spaghetti</a></p>
@@ -127,6 +145,7 @@ if (isset($_GET['logout']) && $_GET['logout']) {
 
     <script src="/resources/main.js"></script>
     <script>
+        const settingsButton = document.querySelector("li.settings");
         const logoutButton = document.querySelector("li.logout");
 
         if (logoutButton) {
@@ -135,6 +154,14 @@ if (isset($_GET['logout']) && $_GET['logout']) {
                         method: 'GET'
                     })
                     .then(() => window.location.href = '/');
+            });
+        }
+
+        if (settingsButton) {
+            settingsButton.addEventListener("click", () => {
+                const loginUrl = document.querySelector('html').getAttribute('data-login-url');
+
+                window.location.href = `/${loginUrl}/settings`;
             });
         }
     </script>
