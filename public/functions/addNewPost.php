@@ -1,6 +1,6 @@
 <?php
 
-require(__DIR__ . '/../helpers/getPostsByTitle.php');
+require(__DIR__ . '/../../helpers/getPostsByTitle.php');
 
 $form = $_POST;
 $errors = [];

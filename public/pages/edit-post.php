@@ -5,7 +5,7 @@ if (!$filename) {
     header('Location: /404');
 }
 
-require(__DIR__ . '/../resources/php/parsedown-1.7.4/Parsedown.php');
+require(__DIR__ . '/../../libs/parsedown-1.7.4/Parsedown.php');
 
 $parsedown = new Parsedown();
 

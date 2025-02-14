@@ -1,6 +1,6 @@
 <?php
 
-require(__DIR__ . '/../helpers/getPostsByTitle.php');
+require(__DIR__ . '/../../helpers/getPostsByTitle.php');
 
 $form = $_POST;
 $errors = [];
@@ -12,7 +12,6 @@ $title = $form['title'];
 $summary = $form['summary'];
 $content = $form['content'];
 
-// TODO: Criar função para essas validações
 if (!$title) {
     $errors[] = [
         'field' => 'title',
