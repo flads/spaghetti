@@ -83,6 +83,7 @@ usort($posts, fn($a, $b) => $b['date'] <=> $a['date']);
 </main>
 
 <script>
+    const loginUrl = document.querySelector('html').getAttribute('data-login-url');
     const addNewPostButton = document.querySelector("button.add-new-post");
     const editButtons = document.querySelectorAll("div.post-actions i.fa-pencil");
     const deleteButtons = document.querySelectorAll("div.post-actions i.fa-trash");
@@ -93,7 +94,7 @@ usort($posts, fn($a, $b) => $b['date'] <=> $a['date']);
 
     if (addNewPostButton) {
         addNewPostButton.onclick = (event) => {
-            window.location.href = '/admin/add-new-post';
+            window.location.href = `/${loginUrl}/add-new-post`;
         }
     }
 
@@ -104,7 +105,7 @@ usort($posts, fn($a, $b) => $b['date'] <=> $a['date']);
             editButton.onclick = (event) => {
                 const filename = event.target.getAttribute('data-filename');
 
-                window.location.href = `/admin/edit-post?file=${filename}`;
+                window.location.href = `/${loginUrl}/edit-post?file=${filename}`;
             }
         });
     }

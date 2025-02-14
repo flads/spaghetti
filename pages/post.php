@@ -66,6 +66,7 @@ $post['content'] = $parsedown->text(implode($file));
 </main>
 
 <script>
+    const loginUrl = document.querySelector('html').getAttribute('data-login-url');
     const editButton = document.querySelector("div.post-actions i.fa-pencil");
     const deleteButton = document.querySelector("div.post-actions i.fa-trash");
     const modal = document.querySelector("div.modal");
@@ -79,7 +80,7 @@ $post['content'] = $parsedown->text(implode($file));
         editButton.onclick = (event) => {
             const filename = event.target.getAttribute('data-filename');
 
-            window.location.href = `/admin/edit-post?file=${filename}`;
+            window.location.href = `/${loginUrl}/edit-post?file=${filename}`;
         }
     }
 

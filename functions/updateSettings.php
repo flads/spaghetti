@@ -1,7 +1,5 @@
 <?php
 
-require(__DIR__ . '/../helpers/getPostsByTitle.php');
-
 $form = $_POST;
 $errors = [];
 
@@ -14,14 +12,14 @@ $linkedinUser = $form['linkedin_user'];
 if (!$websiteTitle) {
     $errors[] = [
         'field' => 'website-title',
-        'message' => 'Webiste title is required!',
+        'message' => 'Website title is required!',
     ];
 }
 
 if (strlen($websiteTitle) > 20) {
     $errors[] = [
         'field' => 'website-title',
-        'message' => 'Webiste title is too long!',
+        'message' => 'Website title is too long!',
     ];
 }
 

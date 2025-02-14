@@ -41,11 +41,12 @@ $linkedinUser = $env["LINKEDIN_USER"];
 </main>
 
 <script>
+    const loginUrl = document.querySelector('html').getAttribute('data-login-url');
     const editButton = document.querySelector("div.page-actions i.fa-pencil");
 
     if (editButton) {
         editButton.onclick = (event) => {
-            window.location.href = `/admin/edit-page?file=_about`;
+            window.location.href = `/${loginUrl}/edit-page?file=_about`;
         }
     }
 </script>

@@ -139,7 +139,7 @@ $linkedinUser = $env["LINKEDIN_USER"];
             <a target="_blank" href="http://linkedin.com/in/<?php echo $linkedinUser ?>"><i class="fa-brands fa-linkedin"></i></a>
         </div>
         <div>
-            <p>Made with <a target="_blank" href="https://spaghetti.rest">Spaghetti</a></p>
+            <p>Made with <a target="_blank" href="https://github.com/flads/spaghetti">Spaghetti</a></p>
         </div>
     </footer>
 
