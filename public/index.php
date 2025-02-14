@@ -7,7 +7,17 @@ if (isset($_GET['logout']) && $_GET['logout']) {
     unset($_SESSION['logged']);
 }
 
-$env = parse_ini_file(__DIR__ . '/../.env');
+$envPath = __DIR__ . '/../.env';
+$env = parse_ini_file($envPath);
+
+if (!$env) {
+    $_SESSION["logged"] = true;
+    $isLogged = true;
+
+    copy(__DIR__ . '/../.env.example', $envPath);
+
+    $env = parse_ini_file($envPath);
+}
 
 $websiteName = $env["WEBSITE_NAME"];
 $loginUrl = $env["LOGIN_URL"];
