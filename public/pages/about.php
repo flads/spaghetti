@@ -12,7 +12,7 @@ for ($i = 0; $i < 3; $i++) {
 
 $content = $parsedown->text(implode($file));
 
-$env = parse_ini_file(__DIR__ . '/../.env');
+$env = parse_ini_file(__DIR__ . '/../../.env');
 
 $githubUser = $env["GITHUB_USER"];
 $linkedinUser = $env["LINKEDIN_USER"];

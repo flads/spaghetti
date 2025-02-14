@@ -15,7 +15,7 @@ if (empty($password)) {
 }
 
 if (!empty($password)) {
-    $env = parse_ini_file(__DIR__ . '/../.env');
+    $env = parse_ini_file(__DIR__ . '/../../.env');
 
     if ($password === $env["PASSWORD"]) {
         unset($_SESSION["failed_login_attempts"]);

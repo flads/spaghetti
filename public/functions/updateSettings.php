@@ -67,7 +67,7 @@ if (!empty($errors)) {
     return;
 }
 
-$filePath = __DIR__ . '/../.env';
+$filePath = __DIR__ . '/../../.env';
 
 $content = 'WEBSITE_NAME="' . $websiteTitle . '"' . PHP_EOL;
 $content .= 'LOGIN_URL="' . $loginUrl . '"' . PHP_EOL;
