@@ -40,10 +40,29 @@ $post['content'] = implode($file);
     <div class="container">
         <div class="title">
             <h2 class="m-0"><?php echo $isAboutPage ? 'Edit Page' : 'Edit Post' ?></h2>
-            <p class="m-0"><?php echo $post['date'] ?></p>
+            <div class="date">
+                <p class="m-0" id="displayedDate"><?php echo $post['date'] ?></p>
+                <?php if ($isLogged) { ?>
+                    <i class="fa-solid fa-pencil pointer" id="editDate" title="Edit date"></i>
+                <?php } ?>
+            </div>
         </div>
         <span class="error general-error"></span>
         <form data-filename="<?php echo $filename ?>" class="w-100" method="POST">
+            <div class="hidden" id="dateFormGroup">
+                <label for="date">Date</label>
+                <input
+                    id="date"
+                    type="text"
+                    name="date"
+                    class="w-25"
+                    placeholder="Enter date here"
+                    data-old-value="<?php echo $post['date'] ?>"
+                    value="<?php echo $post['date'] ?>"
+                    maxlength="10">
+                <span class="error date-error"></span>
+            </div>
+            <hr class="hidden" id="dateLine">
             <div class="form-group">
                 <label for="title">Title</label>
                 <input
@@ -76,6 +95,10 @@ $post['content'] = implode($file);
 </main>
 
 <script>
+    const displayedDate = document.getElementById('displayedDate');
+    const editDate = document.getElementById('editDate');
+    const dateFormGroup = document.getElementById('dateFormGroup');
+    const dateLine = document.getElementById('dateLine');
     const filename = document.getElementsByTagName('form')[0].getAttribute('data-filename')
     const oldTitle = document.getElementsByName('title')[0].getAttribute('data-old-value')
     const submitButton = document.querySelector("div.form-group button.submit");
@@ -90,6 +113,16 @@ $post['content'] = implode($file);
 
     if (!isAboutPage) {
         errorFields.push('summary');
+    }
+
+    if (editDate) {
+        editDate.onclick = (event) => {
+            dateFormGroup.classList.remove('hidden');
+            dateLine.classList.remove('hidden');
+            dateFormGroup.classList.add('form-group');
+            displayedDate.classList.add('hidden');
+            editDate.classList.add('hidden');
+        }
     }
 
     document.addEventListener('keydown', (event) => {

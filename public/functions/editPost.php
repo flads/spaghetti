@@ -7,10 +7,24 @@ $errors = [];
 
 $isAboutPage = $form['filename'] === '_about';
 
+$date = $form['date'];
 $oldTitle = $form['oldTitle'];
 $title = $form['title'];
 $summary = $form['summary'];
 $content = $form['content'];
+
+if ($date) {
+    if (
+        !str_contains($date, '-') ||
+        !(strlen($date) == '10') ||
+        !is_numeric(str_replace('-', '', $date))
+    ) {
+        $errors[] = [
+            'field' => 'date',
+            'message' => 'Date format is invalid!',
+        ];
+    }
+}
 
 if (!$title) {
     $errors[] = [
@@ -83,7 +97,10 @@ $postSettings = [
 if (!$isAboutPage) {
     $oldFile = file($oldFilePath);
 
-    $postSettings['date'] = mb_substr($oldFile[2], 6, -1);
+    $postSettings['date'] = $date
+        ? date('Y-m-d H:i:s', strtotime($date))
+        : mb_substr($oldFile[2], 6, -1);
+
     $postSettings['summary'] = '"' . $form['summary'] . '"';
     $postSettings['draft'] = $form['draft'] ?? 'false';
     $postSettings['pinned'] = $form['pinned'] ?? 'false';

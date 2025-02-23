@@ -84,6 +84,12 @@ p a {
   font-weight: 600;
 }
 
+hr {
+  margin-top: 20px;
+  border: none;
+  border-top: 1px solid var(--fg-color);
+}
+
 .container {
   max-width: 768px;
   display: flex;
@@ -112,6 +118,10 @@ code {
 
 .pointer {
   cursor: pointer;
+}
+
+.w-25 {
+  width: 25%;
 }
 
 .w-50 {
@@ -219,9 +229,23 @@ main.posts li div.post-header div p {
   font-size: 0.9rem;
 }
 
-main div.title p {
+main div.title div.date {
+  margin-top: 5px;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  font-weight: 600;
+  gap: 7px;
+}
+
+main div.title div.date p {
   margin-top: 5px;
   font-size: 0.9rem;
+}
+
+main div.title div.date i {
+  margin-top: 10px;
+  font-size: 0.7rem;
 }
 
 main.settings input {
@@ -344,7 +368,7 @@ form label {
 }
 
 form input {
-  min-height: 32px;
+  min-height: 20px;
 }
 
 form input,
@@ -404,6 +428,7 @@ form.login div.form-group div {
 
 form.login div.form-group input {
   width: 100%;
+  min-height: 25px;
 }
 
 span.note {
@@ -422,8 +447,8 @@ form div.form-group span.error {
 }
 
 form.login div.form-group button {
+  height: 30px;
   width: 38px;
-  padding: 9px 0;
 }
 
 form.login input,
