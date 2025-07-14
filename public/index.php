@@ -100,7 +100,9 @@ $linkedinUser = $env["LINKEDIN_USER"];
         $path = $parsedUrl['path'];
         $query = $parsedUrl['query'] ?? null;
 
-        parse_str($query, $parsedQuery);
+        if ($query) {
+            parse_str($query, $parsedQuery);
+        }
 
         switch ($path) {
             case '/':
@@ -114,7 +116,7 @@ $linkedinUser = $env["LINKEDIN_USER"];
                     include 'pages/login.php';
                     break;
                 }
-                header('Location: /');
+                include 'pages/posts.php';
                 break;
             case '/' . $loginUrl . '/add-new-post':
                 if ($isLogged) {
@@ -139,7 +141,7 @@ $linkedinUser = $env["LINKEDIN_USER"];
                 include 'pages/404.php';
                 break;
             default:
-                include !file(__DIR__ . '/posts' . str_replace('/post', '', $_SERVER['REQUEST_URI']) . '.md')
+                include !file_exists(__DIR__ . '/posts' . str_replace('/post', '', $_SERVER['REQUEST_URI']) . '.md')
                     ? 'pages/404.php'
                     : 'pages/post.php';
                 break;

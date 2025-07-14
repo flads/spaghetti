@@ -1,40 +1,50 @@
 <?php
 $filename = $parsedQuery['file'];
-
-if (!$filename) {
-    header('Location: /404');
-}
-
-require(__DIR__ . '/../../libs/parsedown-1.7.4/Parsedown.php');
-
-$parsedown = new Parsedown();
-
 $uri = $_SERVER['REQUEST_URI'];
-$filePath = __DIR__ . '/../posts/' . str_replace('/post/', '', $filename) . '.md';
-$file = file($filePath);
+
+if ($filename) {
+    $filePath = __DIR__ . '/../posts/' . str_replace('/post/', '', $filename) . '.md';
+    $fileExists = file_exists($filePath);
+}
 
 $isAboutPage = $filename === '_about';
 
-if (!$file || ($filename[0] === '_' && !$isAboutPage)) {
-    header('Location: /404');
-}
+$redirect = !$filename || !$fileExists || ($filename[0] === '_' && !$isAboutPage);
+?>
+
+<div id="redirect" data-redirect="<?php echo $redirect ?>"></div>
+
+<script>
+    const redirect = document.getElementById('redirect').getAttribute('data-redirect');
+
+    if (redirect) window.location.href = '/404';
+</script>
+
+
+<?php
+require(__DIR__ . '/../../libs/parsedown-1.7.4/Parsedown.php');
+
+$parsedown = new Parsedown();
+$file = file($filePath);
 
 $post = [
     'title' => mb_substr($file[1], 8, -2)
 ];
 
-if (!$isAboutPage) {
-    $post['date'] = date_format(date_create(mb_substr($file[2], 6, -1)), 'd-m-Y');
-    $post['summary'] = mb_substr($file[3], 10, -2);
-    $post['draft'] = mb_substr($file[4], 6, -1);
-    $post['pinned'] = mb_substr($file[5], 8, -1);
+if ($file) {
+    if (!$isAboutPage) {
+        $post['date'] = date_format(date_create(mb_substr($file[2], 6, -1)), 'd-m-Y');
+        $post['summary'] = mb_substr($file[3], 10, -2);
+        $post['draft'] = mb_substr($file[4], 6, -1);
+        $post['pinned'] = mb_substr($file[5], 8, -1);
+    }
+    
+    for ($i = 0; $i < (count($post) + 2); $i++) {
+        unset($file[$i]);
+    }
+    
+    $post['content'] = implode($file);
 }
-
-for ($i = 0; $i < (count($post) + 2); $i++) {
-    unset($file[$i]);
-}
-
-$post['content'] = implode($file);
 ?>
 <main class="edit-post">
     <div class="container">
@@ -48,7 +58,7 @@ $post['content'] = implode($file);
             </div>
         </div>
         <span class="error general-error"></span>
-        <form data-filename="<?php echo $filename ?>" class="w-100" method="POST">
+        <form class="w-100" method="POST">
             <div class="hidden" id="dateFormGroup">
                 <label for="date">Date</label>
                 <input
@@ -99,7 +109,6 @@ $post['content'] = implode($file);
     const editDate = document.getElementById('editDate');
     const dateFormGroup = document.getElementById('dateFormGroup');
     const dateLine = document.getElementById('dateLine');
-    const filename = document.getElementsByTagName('form')[0].getAttribute('data-filename')
     const oldTitle = document.getElementsByName('title')[0].getAttribute('data-old-value')
     const submitButton = document.querySelector("div.form-group button.submit");
 

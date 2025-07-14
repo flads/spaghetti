@@ -1,3 +1,13 @@
+<?php $redirect = $path === "/$loginUrl" ?>
+
+<div id="redirect" data-redirect="<?php echo $redirect ?>"></div>
+
+<script>
+    const redirect = document.getElementById('redirect').getAttribute('data-redirect');
+
+    if (redirect) window.location.href = '/';
+</script>
+
 <?php
 require(__DIR__ . '/../../libs/parsedown-1.7.4/Parsedown.php');
 
