@@ -20,11 +20,11 @@ $linkedinUser = $env["LINKEDIN_USER"];
 
 <main class="about">
     <div class="container">
-        <div class="page-header">
+        <div class="post-header">
             <div>
                 <h2 class="m-0"><?php echo $title ?></h2>
             </div>
-            <div class="page-actions">
+            <div class="post-actions pointer">
                 <?php if ($isLogged) { ?>
                     <i class="fa-solid fa-pencil" title="Edit page"></i>
                 <?php } ?>
@@ -42,7 +42,7 @@ $linkedinUser = $env["LINKEDIN_USER"];
 
 <script>
     const loginUrl = document.querySelector('html').getAttribute('data-login-url');
-    const editButton = document.querySelector("div.page-actions i.fa-pencil");
+    const editButton = document.querySelector("div.post-actions i.fa-pencil");
 
     if (editButton) {
         editButton.onclick = (event) => {

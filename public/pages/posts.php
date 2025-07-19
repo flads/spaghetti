@@ -36,7 +36,7 @@ usort($posts, fn($a, $b) => $b['date'] <=> $a['date']);
 
 <main class="posts">
     <div class="container">
-        <div class="posts-header">
+        <div class="page-header">
             <?php if ($isLogged) { ?>
                 <button class="add-new-post">
                     Add new Post
