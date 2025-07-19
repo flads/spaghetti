@@ -13,6 +13,7 @@ $redirect = !$filename || !$fileExists || ($filename[0] === '_' && !$isAboutPage
 ?>
 
 <div id="redirect" data-redirect="<?php echo $redirect ?>"></div>
+<div id="filename" data-filename="<?php echo $filename ?>"></div>
 
 <script>
     const redirect = document.getElementById('redirect').getAttribute('data-redirect');
@@ -109,6 +110,7 @@ if ($file) {
     const editDate = document.getElementById('editDate');
     const dateFormGroup = document.getElementById('dateFormGroup');
     const dateLine = document.getElementById('dateLine');
+    const filename = document.getElementById('filename').getAttribute('data-filename')
     const oldTitle = document.getElementsByName('title')[0].getAttribute('data-old-value')
     const submitButton = document.querySelector("div.form-group button.submit");
 
