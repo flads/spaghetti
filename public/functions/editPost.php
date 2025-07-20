@@ -133,6 +133,7 @@ class EditPost extends Spaghetti
 
         file_put_contents($newFilePath, $postContent);
 
+        http_response_code(200);
         echo json_encode([
             'filename' => StringHandler::toKebab($title)
         ]);

@@ -92,6 +92,12 @@ class AddNewPost extends Spaghetti
         $postContent .= $form['content'];
 
         file_put_contents($filePath, $postContent);
+
+        http_response_code(200);
+        echo json_encode([
+            'filename' => $filename
+        ]);
+        return;
     }
 }
 
