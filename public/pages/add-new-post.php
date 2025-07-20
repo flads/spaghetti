@@ -49,7 +49,7 @@
                 document.querySelector(`span.${field}-error`).innerHTML = '';
             });
 
-            event.preventDefault()
+            event.preventDefault();
 
             const form = new FormData(document.querySelector('form'));
 
@@ -58,19 +58,20 @@
                 body: form
             });
 
+            const data = await response.json();
+
             if (response.status === 422) {
-                const data = await response.json();
-
                 data.errors.forEach(error => {
-                    const span = document.querySelector(`span.${error.field}-error`);
-
-                    span.innerHTML = error.message;
+                    document.querySelector(`span.${error.field}-error`).innerHTML = error.message;
                 });
-
                 return;
             }
 
-            window.location.href = '/'
+            if (response.status === 500) {
+                throw new Error(data.errors[0].message);
+            }
+
+            window.location.href = '/';
         } catch (error) {
             document.querySelector(`span.general-error`).innerHTML = 'Oops! Something went wrong!';
         }

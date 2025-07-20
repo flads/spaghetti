@@ -51,12 +51,14 @@ if ($file) {
     <div class="container">
         <div class="title">
             <h2 class="m-0"><?php echo $isAboutPage ? 'Edit Page' : 'Edit Post' ?></h2>
-            <div class="date">
-                <p class="m-0" id="displayedDate"><?php echo $post['date'] ?></p>
-                <?php if ($isLogged) { ?>
-                    <i class="fa-solid fa-pencil pointer" id="editDate" title="Edit date"></i>
-                <?php } ?>
-            </div>
+            <?php if (!$isAboutPage) { ?>
+                <div class="date">
+                    <p class="m-0" id="displayedDate"><?php echo $post['date'] ?></p>
+                    <?php if ($isLogged) { ?>
+                        <i class="fa-solid fa-pencil pointer" id="editDate" title="Edit date"></i>
+                    <?php } ?>
+                </div>
+            <?php } ?>
         </div>
         <span class="error general-error"></span>
         <form class="w-100" method="POST">
@@ -86,7 +88,7 @@ if ($file) {
                     value="<?php echo $post['title'] ?>">
                 <span class="error title-error"></span>
             </div>
-            <?php if ($post['summary']) { ?>
+            <?php if (!$isAboutPage) { ?>
                 <div class="form-group">
                     <label for="summary">Summary</label>
                     <textarea id="summary" class="summary" name="summary" placeholder="Summarize what your post is about" maxlength="255"><?php echo $post['summary'] ?></textarea>
@@ -110,8 +112,8 @@ if ($file) {
     const editDate = document.getElementById('editDate');
     const dateFormGroup = document.getElementById('dateFormGroup');
     const dateLine = document.getElementById('dateLine');
-    const filename = document.getElementById('filename').getAttribute('data-filename')
-    const oldTitle = document.getElementsByName('title')[0].getAttribute('data-old-value')
+    const filename = document.getElementById('filename').getAttribute('data-filename');
+    const oldTitle = document.getElementsByName('title')[0].getAttribute('data-old-value');
     const submitButton = document.querySelector("div.form-group button.submit");
 
     const isAboutPage = filename === '_about';
@@ -148,7 +150,7 @@ if ($file) {
                 document.querySelector(`span.${field}-error`).innerHTML = '';
             });
 
-            event.preventDefault()
+            event.preventDefault();
 
             const form = new FormData(document.querySelector('form'));
 
@@ -164,12 +166,13 @@ if ($file) {
 
             if (response.status === 422) {
                 data.errors.forEach(error => {
-                    const span = document.querySelector(`span.${error.field}-error`);
-
-                    span.innerHTML = error.message;
+                    document.querySelector(`span.${error.field}-error`).innerHTML = error.message;
                 });
-
                 return;
+            }
+
+            if (response.status === 500) {
+                throw new Error(data.errors[0].message);
             }
 
             window.location.href = isAboutPage ?
