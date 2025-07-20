@@ -1,11 +1,14 @@
 <?php
 
+namespace Services;
+
 use Helpers\PostsHelper;
 use Utils\StringHandler;
+use Services\Service;
 
-require('Spaghetti.php');
+require('Service.php');
 
-class AddNewPost extends Spaghetti
+class AddNewPostService extends Service
 {
     public function run(): void
     {
@@ -101,4 +104,4 @@ class AddNewPost extends Spaghetti
     }
 }
 
-(new AddNewPost())->run();
+(new AddNewPostService())->run();

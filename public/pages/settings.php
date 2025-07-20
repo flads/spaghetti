@@ -109,7 +109,7 @@
 
             const form = new FormData(document.querySelector('form'));
 
-            const response = await fetch('/functions/updateSettings.php', {
+            const response = await fetch('/services/UpdateSettingsService.php', {
                 method: 'POST',
                 body: form
             });

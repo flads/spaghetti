@@ -157,7 +157,7 @@ if ($file) {
             form.set('oldTitle', oldTitle);
             form.set('filename', filename);
 
-            const response = await fetch('/functions/editPost.php', {
+            const response = await fetch('/services/EditPostService.php', {
                 method: 'POST',
                 body: form
             });

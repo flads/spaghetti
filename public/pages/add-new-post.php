@@ -53,7 +53,7 @@
 
             const form = new FormData(document.querySelector('form'));
 
-            const response = await fetch('/functions/addNewPost.php', {
+            const response = await fetch('/services/AddNewPostService.php', {
                 method: 'POST',
                 body: form
             });

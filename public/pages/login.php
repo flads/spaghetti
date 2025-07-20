@@ -35,7 +35,7 @@
 
             const form = new FormData(document.querySelector('form'));
 
-            const response = await fetch('/functions/login.php', {
+            const response = await fetch('/services/LoginService.php', {
                 method: 'POST',
                 body: form
             });

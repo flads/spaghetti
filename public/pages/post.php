@@ -104,7 +104,7 @@ $post['content'] = $parsedown->text(implode($file));
         modalConfirmButton.onclick = () => {
             const filename = target.getAttribute('data-filename');
 
-            fetch('/functions/deletePost.php?file_to_delete=' + filename, {
+            fetch('/services/DeletePostService.php?file_to_delete=' + filename, {
                 method: 'GET'
             }).then(() => {
                 window.location.href = '/'

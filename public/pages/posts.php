@@ -142,7 +142,7 @@ usort($posts, fn($a, $b) => $b['date'] <=> $a['date']);
         modalConfirmButton.onclick = () => {
             const filename = target.getAttribute('data-filename');
 
-            fetch('/functions/deletePost.php?file_to_delete=' + filename, {
+            fetch('/services/DeletePostService.php?file_to_delete=' + filename, {
                 method: 'GET'
             }).then(() => location.reload());
         }
