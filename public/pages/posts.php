@@ -47,13 +47,18 @@ usort($posts, fn($a, $b) => $b['date'] <=> $a['date']);
             <?php foreach ($posts as $post) { ?>
                 <li>
                     <div class="post-header">
-                        <div>
-                            <h2 class="m-0">
-                                <a href="/post/<?php echo $post['filename'] ?>">
-                                    <?php echo $post['title'] ?>
-                                </a>
-                            </h2>
-                            <p class="m-0"><?php echo $post['formattedDate'] ?></p>
+                        <div class="post-title">
+                            <div>
+                                <h2 class="m-0">
+                                    <a href="/post/<?php echo $post['filename'] ?>">
+                                        <?php echo $post['title'] ?>
+                                    </a>
+                                </h2>
+                                <p class="m-0"><?php echo $post['formattedDate'] ?></p>
+                            </div>
+                            <?php if ($post['pinned'] === 'true') { ?>
+                                <i class="fa-solid fa-map-pin <?php if ($isLogged) echo "pointer" ?>"></i>
+                            <?php } ?>
                         </div>
                         <div class="post-actions">
                             <?php if ($isLogged) { ?>

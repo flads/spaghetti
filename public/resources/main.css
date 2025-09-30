@@ -203,6 +203,15 @@ div.post-header {
   margin-bottom: 0px;
 }
 
+div.post-header div.post-title {
+  display: flex;
+  gap: 12px;
+}
+
+div.post-header div.post-title i {
+  margin-top: 6px;
+}
+
 div.post-header div.title {
   display: flex;
   flex-direction: column;

@@ -27,11 +27,16 @@ $post['content'] = $parsedown->text(implode($file));
 <main class="post">
     <div class="container">
         <div class="post-header">
-            <div class="title">
-                <h2 class="m-0">
-                    <?php echo $post['title'] ?>
-                </h2>
-                <p class="m-0"><?php echo $post['date'] ?></p>
+            <div class="post-title">
+                <div class="title">
+                    <h2 class="m-0">
+                        <?php echo $post['title'] ?>
+                    </h2>
+                    <p class="m-0"><?php echo $post['date'] ?></p>
+                </div>
+                <?php if ($post['pinned'] === 'true') { ?>
+                    <i class="fa-solid fa-map-pin <?php if ($isLogged) echo "pointer" ?>"></i>
+                <?php } ?>
             </div>
             <div class="post-actions">
                 <?php if ($isLogged) { ?>
