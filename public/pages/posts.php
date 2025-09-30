@@ -31,7 +31,13 @@ $posts = array_map(function ($filename) use ($parsedown) {
     ];
 }, $postsFilenames);
 
-usort($posts, fn($a, $b) => $b['date'] <=> $a['date']);
+usort($posts, function ($a, $b) {
+    if ($a['pinned'] == $b['pinned']) {
+        return $b['date'] <=> $a['date'];
+    }
+
+    return $b['pinned'] <=> $a['pinned'];
+});
 ?>
 
 <main class="posts">
