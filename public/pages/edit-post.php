@@ -34,7 +34,7 @@ $post = [
 
 if ($file) {
     if (!$isAboutPage) {
-        $post['date'] = date_format(date_create(mb_substr($file[2], 6, -1)), 'd-m-Y');
+        $post['date'] = date_format(date_create(mb_substr($file[2], 6, -1)), 'Y-m-d');
         $post['summary'] = mb_substr($file[3], 10, -2);
         $post['draft'] = mb_substr($file[4], 6, -1);
         $post['pinned'] = mb_substr($file[5], 8, -1);
