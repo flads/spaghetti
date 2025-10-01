@@ -209,7 +209,12 @@ div.post-header div.post-title {
 }
 
 div.post-header div.post-title i {
-  margin-top: 6px;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+div.post-header div.post-title i.disabled {
+  color: var(--secondary-icon-color);
 }
 
 div.post-header div.title {

@@ -34,8 +34,15 @@ $post['content'] = $parsedown->text(implode($file));
                     </h2>
                     <p class="m-0"><?php echo $post['date'] ?></p>
                 </div>
-                <?php if ($post['pinned'] === 'true') { ?>
-                    <i class="fa-solid fa-map-pin <?php if ($isLogged) echo "pointer" ?>"></i>
+                <?php if ($isLogged) { ?>
+                    <i
+                        class="fa-solid fa-thumbtack pointer <?php if ($post['pinned'] === 'false') echo "disabled" ?>"
+                        data-filename="<?php echo $post['filename'] ?>"
+                    >
+                    </i>
+                <?php } ?>
+                <?php if (!$isLogged && $post['pinned'] === 'true') { ?>
+                    <i class="fa-solid fa-thumbtack"></i>
                 <?php } ?>
             </div>
             <div class="post-actions">
@@ -72,12 +79,25 @@ $post['content'] = $parsedown->text(implode($file));
 
 <script>
     const loginUrl = document.querySelector('html').getAttribute('data-login-url');
+    const pinButtons = document.querySelectorAll('div.post-title i.fa-thumbtack[data-filename]');
     const editButton = document.querySelector("div.post-actions i.fa-pencil");
     const deleteButton = document.querySelector("div.post-actions i.fa-trash");
     const modal = document.querySelector("div.modal");
     const modalCloseButton = document.querySelector("div.modal i.fa-xmark");
     const modalCancelButton = document.querySelector("div.modal button.cancel");
     const modalConfirmButton = document.querySelector("div.modal button.confirm");
+
+    if (pinButtons) {
+        pinButtons.forEach(pinButton => {
+            pinButton.onclick = (event) => {
+                const filename = event.target.getAttribute('data-filename');
+
+                fetch('/services/PinPostService.php?filename=' + filename, {
+                    method: 'GET'
+                }).then(() => location.reload());
+            }
+        });
+    }
 
     let target;
 
