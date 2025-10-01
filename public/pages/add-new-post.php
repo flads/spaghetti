@@ -1,6 +1,6 @@
-<main class="add-new-post">
+<main class="new-post">
     <div class="container">
-        <h2 class="m-0">Add New Post</h2>
+        <h2 class="m-0">New Post</h2>
         <span class="error general-error"></span>
         <form class="w-100" method="POST">
             <div class="form-group">

@@ -326,7 +326,7 @@ div.modal div.modal-footer {
   gap: 8px;
 }
 
-main.posts button.add-new-post,
+main.posts button.new-post,
 div.modal div.modal-footer button {
   font-size: 0.85rem;
   cursor: pointer;
@@ -360,7 +360,7 @@ main.about div.socials {
 }
 
 main.edit-post form,
-main.add-new-post form,
+main.new-post form,
 main.settings form {
   margin-top: 20px;
 }

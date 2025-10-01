@@ -44,8 +44,8 @@ usort($posts, function ($a, $b) {
     <div class="container">
         <div class="page-header">
             <?php if ($isLogged) { ?>
-                <button class="add-new-post">
-                    Add new Post
+                <button class="new-post">
+                    New Post
                 </button>
             <?php } ?>
         </div>
@@ -105,7 +105,7 @@ usort($posts, function ($a, $b) {
 
 <script>
     const loginUrl = document.querySelector('html').getAttribute('data-login-url');
-    const addNewPostButton = document.querySelector("button.add-new-post");
+    const addNewPostButton = document.querySelector("button.new-post");
     const editButtons = document.querySelectorAll("div.post-actions i.fa-pencil");
     const deleteButtons = document.querySelectorAll("div.post-actions i.fa-trash");
     const modal = document.querySelector("div.modal");
@@ -157,9 +157,7 @@ usort($posts, function ($a, $b) {
                 method: 'GET'
             }).then(() => location.reload());
         }
-    }
 
-    if (modal) {
         window.onclick = function(event) {
             if (event.target == modal) {
                 modal.style.display = 'none';
